@@ -1,0 +1,17 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+.wrapper {
+  width: 990px;
+}
+
+h1.title {
+  font-size: 40px;
+}
+
+p.tagline {
+  text-align: center;
+  font-size: 20px;
+}

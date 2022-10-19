@@ -1,4 +1,5 @@
 remote_theme: pages-themes/time-machine@v0.2.0
 title: File Management System documentation
+name: File Management System
 description: A File Management System is a simple microservice project for sharing uploaded files with the ability to convert files to different types.
 show_downloads: true

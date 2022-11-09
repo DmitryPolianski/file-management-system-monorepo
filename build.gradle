@@ -1,0 +1,13 @@
+version = '0.0.1-SNAPSHOT'
+
+allprojects {
+    group = 'com.file.management.system'
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+}

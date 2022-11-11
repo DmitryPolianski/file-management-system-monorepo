@@ -21,7 +21,8 @@ subprojects {
     }
 
     jacocoTestCoverageVerification {
-        dependsOn test
+        dependsOn check
+        executionData { tasks.withType(Test).findAll { it.jacoco.destinationFile.exists() }*.jacoco.destinationFile }
         violationRules {
             rule {
                 element = 'CLASS'

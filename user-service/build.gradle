@@ -81,3 +81,5 @@ task integrationTest(type: Test) {
 processIntegrationTestResources {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
+
+check.dependsOn integrationTest

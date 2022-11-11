@@ -1,0 +1,16 @@
+version: "2.1"
+
+services:
+  postgres_user_db:
+    image: postgres:12.3
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: file_management_system_user
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "POSTGRES_PASSWORD=postgres pg_isready -U postgres" ]
+      retries: 30
+      interval: 5s
+      timeout: 5s

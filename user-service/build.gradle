@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.7.5'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'groovy'
+    id 'org.flywaydb.flyway' version '9.7.0'
 }
 
 version = '0.0.1-SNAPSHOT'
@@ -11,9 +12,41 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    mapstructVersion = '1.5.3.Final'
+    lombokVersion = '1.18.24'
+}
+
+sourceSets {
+    integrationTest {
+        groovy.srcDir 'src/integrationTest/groovy'
+        resources.srcDir 'src/integrationTest/resources'
+        java {
+            srcDirs = []
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+        }
+    }
+}
+
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+}
+
 dependencies {
+    //spring
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    //other
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+    implementation 'org.postgresql:postgresql'
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+
     //test
     testImplementation 'org.codehaus.groovy:groovy-all:3.0.13'
     testImplementation 'org.spockframework:spock-spring:2.3-groovy-3.0'
@@ -22,8 +55,29 @@ dependencies {
     }
     testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
 
+    //integrationTest
+    integrationTestImplementation  'com.h2database:h2'
+    integrationTestImplementation  'org.flywaydb:flyway-core'
+
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+task integrationTest(type: Test) {
+    useJUnitPlatform()
+    configure {
+        group = 'Verification'
+        description = 'Run the integration tests'
+    }
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    mustRunAfter test
+    testLogging.showStandardStreams = true
+    testLogging.exceptionFormat = 'full'
+}
+
+processIntegrationTestResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }

@@ -23,11 +23,13 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - name: Build with Gradle
-      run: ./gradlew build -x test
-    - name: Run unit tests with Gradle
+    - name: Build
+      run: ./gradlew build -x check
+    - name: Run check style
+      run: ./gradlew checkstyleMain
+    - name: Run unit tests
       run: ./gradlew test
-    - name: Run integration tests with Gradle
+    - name: Run integration tests
       run: ./gradlew integrationTest
-    - name: Run jacoco test coverage verification with Gradle
+    - name: Run jacoco test coverage verification
       run: ./gradlew jacocoTestCoverageVerification

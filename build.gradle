@@ -32,6 +32,16 @@ subprojects {
                 }
             }
         }
+        finalizedBy jacocoTestReport
+    }
+
+    jacocoTestReport {
+        dependsOn check
+        executionData { tasks.withType(Test).findAll { it.jacoco.destinationFile.exists() }*.jacoco.destinationFile }
+        reports {
+            xml.enabled true
+            html.enabled true
+        }
     }
 
 }

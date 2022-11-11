@@ -10,4 +10,38 @@ allprojects {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
+    apply plugin: 'checkstyle'
+    apply plugin: 'jacoco'
+
+    checkstyle {
+        ignoreFailures = false
+        maxWarnings = 0
+        toolVersion = '8.43'
+        configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+    }
+
+    jacocoTestCoverageVerification {
+        dependsOn check
+        executionData { tasks.withType(Test).findAll { it.jacoco.destinationFile.exists() }*.jacoco.destinationFile }
+        violationRules {
+            rule {
+                element = 'CLASS'
+                excludes = ['com.file.management.system.*.*Application']
+                limit {
+                    minimum = 0.8
+                }
+            }
+        }
+        finalizedBy jacocoTestReport
+    }
+
+    jacocoTestReport {
+        dependsOn check
+        executionData { tasks.withType(Test).findAll { it.jacoco.destinationFile.exists() }*.jacoco.destinationFile }
+        reports {
+            xml.enabled true
+            html.enabled true
+        }
+    }
+
 }

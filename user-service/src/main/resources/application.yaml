@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: file-management-system-user-service
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:file_management_system_user}?currentSchema=${POSTGRES_SCHEMA:users}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+    jpa:
+      hibernate:
+        ddl-auto: validate

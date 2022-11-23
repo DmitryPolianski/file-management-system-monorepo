@@ -5,7 +5,6 @@ import com.file.management.system.user.domain.mapper.UserToViewMapper;
 import com.file.management.system.user.domain.request.CreateUserRequest;
 import com.file.management.system.user.domain.view.UserView;
 import com.file.management.system.user.exception.NotValidUserDataException;
-import com.file.management.system.user.model.User;
 import com.file.management.system.user.repository.UserRepository;
 import com.file.management.system.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserView create(CreateUserRequest request) {
-        User newUser = createUserRequestToUserMapper.convert(request);
+        log.debug("Start processing create user request: {}", request);
+        var newUser = createUserRequestToUserMapper.convert(request);
         if (newUser == null) {
             throw new NotValidUserDataException("User must not be null!");
         }

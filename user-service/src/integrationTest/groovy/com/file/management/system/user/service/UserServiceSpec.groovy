@@ -1,12 +1,10 @@
 package com.file.management.system.user.service
 
 import com.file.management.system.user.AbstractIntegrationSpec
-import com.file.management.system.user.domain.request.CreateUserRequest
 import com.file.management.system.user.exception.NotValidUserDataException
 import com.file.management.system.user.repository.UserRepository
+import com.file.management.system.user.util.TestDataGenerator
 import org.springframework.beans.factory.annotation.Autowired
-
-import java.time.LocalDate
 
 class UserServiceSpec extends AbstractIntegrationSpec {
 
@@ -26,21 +24,15 @@ class UserServiceSpec extends AbstractIntegrationSpec {
 
     def 'create user'() {
         given: 'create user request'
-        def request = CreateUserRequest.builder()
-                .firstName("testFirstName")
-                .lastName("testLastName")
-                .email("test@email.test")
-                .dateOfBirth(LocalDate.now().minusYears(1))
-                .password("testPassword")
-                .build()
+        def request = TestDataGenerator.generateCreateUserRequest()
 
         when: 'create user from request'
         def response = userService.create(request)
 
         then: 'user saved in DB'
         response != null
-        response.id != null
-        def savedUserOpt = userRepository.findById(response.id)
+        response.id() != null
+        def savedUserOpt = userRepository.findById(response.id())
         savedUserOpt.isPresent()
 
         and: 'user has equals data'

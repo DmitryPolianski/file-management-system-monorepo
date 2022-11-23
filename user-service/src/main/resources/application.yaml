@@ -2,9 +2,14 @@ spring:
   application:
     name: file-management-system-user-service
   datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:file_management_system_user}?currentSchema=${POSTGRES_SCHEMA:users}
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:file_management_system_user}
     username: ${POSTGRES_USER:postgres}
     password: ${POSTGRES_PASSWORD:postgres}
     jpa:
       hibernate:
         ddl-auto: validate
+
+users:
+  endpoint:
+    nats:
+      create-user: file_management_system_users__create_user

@@ -1,0 +1,47 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'groovy'
+}
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    lombokVersion = '1.18.24'
+}
+
+bootJar {
+    enabled = false
+}
+
+dependencies {
+    //spring
+    implementation 'org.springframework.boot:spring-boot-autoconfigure'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    //other
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    implementation 'io.nats:jnats:2.16.4'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation 'org.slf4j:slf4j-api'
+
+    //test
+    testImplementation 'org.codehaus.groovy:groovy-all:3.0.13'
+    testImplementation 'org.spockframework:spock-spring:2.3-groovy-3.0'
+    testImplementation('org.springframework.boot:spring-boot-starter-test:2.7.5') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

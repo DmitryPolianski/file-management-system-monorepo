@@ -26,7 +26,12 @@ subprojects {
         violationRules {
             rule {
                 element = 'CLASS'
-                excludes = ['com.file.management.system.*.*Application']
+                excludes = [
+                        'com.file.management.system.*.*Application',
+                        'com.file.management.system.*.domain.*',
+                        'com.file.management.system.*.*Initializer',
+                        'com.file.management.system.*.*Configuration'
+                ]
                 limit {
                     minimum = 0.8
                 }

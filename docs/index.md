@@ -7,9 +7,11 @@ __Table of Contents__
 
 ## Repository Structure
 
-* [nats-transport-starter](../nats-transport-starter): Provides a set of classes and configurations for sending messages
+* [nats-transport-starter](https://github.com/DmitryPolianski/file-management-system-monorepo/tree/master/nats-transport-starter):
+  Provides a set of classes and configurations for sending messages
   to NATS and creating NATS listeners.
-* [user-service](../user-service): Microservice for working with users of the system. Provides the ability to create,
+* [user-service](https://github.com/DmitryPolianski/file-management-system-monorepo/tree/master/user-service):
+  Microservice for working with users of the system. Provides the ability to create,
   delete, manage users.
 
 ## Application Components
